@@ -81,24 +81,6 @@
 				color: "blue",
 				alive: true
 			}
-			var Player3 = {
-				x: 38,
-				y: 37,
-				width: 16,
-				height: 16,
-				direction: "left",
-				color: "green",
-				alive: true
-			}
-			var Player4 = {
-				x: 2,
-				y: 38,
-				width: 16,
-				height: 16,
-				direction: "up",
-				color: "yellow",
-				alive: true
-			}
 			function moveDude(player){
 				switch(player){
 					case 1:
@@ -133,38 +115,6 @@
 								break;
 						}
 						break;
-					case 3:
-						switch(Player3.direction){
-							case "right":
-								Player3.x += 1;
-								break;
-							case "left":
-								Player3.x -= 1;
-								break;
-							case "up":
-								Player3.y -= 1;
-								break;
-							case "down":
-								Player3.y += 1;
-								break;
-						}
-						break;
-					case 4:
-						switch(Player4.direction){
-							case "right":
-								Player4.x += 1;
-								break;
-							case "left":
-								Player4.x -= 1;
-								break;
-							case "up":
-								Player4.y -= 1;
-								break;
-							case "down":
-								Player4.y += 1;
-								break;
-						}
-						break;
 				}
 			}
 			function draw(){
@@ -178,16 +128,6 @@
 					ctx.fillStyle = Player2.color;
 					ctx.fillRect(Player2.x*16,Player2.y*16,Player2.width,Player2.height);
 				}
-				if(Player3.alive){
-					//Player2
-					ctx.fillStyle = Player3.color;
-					ctx.fillRect(Player3.x*16,Player3.y*16,Player3.width,Player3.height);
-				}
-				if(Player4.alive){
-					//Player2
-					ctx.fillStyle = Player4.color;
-					ctx.fillRect(Player4.x*16,Player4.y*16,Player4.width,Player4.height);
-				}
 			}
 			function update(){
 				if(Player1.alive){
@@ -196,12 +136,6 @@
 				if(Player2.alive){
 					moveDude(2);
 				}
-				if(Player3.alive){
-					moveDude(3);
-				}
-				if(Player4.alive){
-					moveDude(4);
-				}
 				//check for collision
 				if(blocks[Player1.y][Player1.x] === 1){
 					Player1.alive = false;
@@ -209,29 +143,15 @@
 				if(blocks[Player2.y][Player2.x] === 1){
 					Player2.alive = false;
 				}
-				if(blocks[Player3.y][Player3.x] === 1){
-					Player3.alive = false;
-				}
-				if(blocks[Player4.y][Player4.x] === 1){
-					Player4.alive = false;
-				}
 				//update collision positions
 				blocks[Player1.y][Player1.x] = 1;
 				blocks[Player2.y][Player2.x] = 1;
-				blocks[Player3.y][Player3.x] = 1;
-				blocks[Player4.y][Player4.x] = 1;
 				//collision detection
 				if(Player1.x <= -1 || Player1.x >= 40 || Player1.y >= 40 || Player1.y <= -1){
 					Player1.alive = false;
 				}
 				if(Player2.x <= -1 || Player2.x >= 40 || Player2.y >= 40 || Player2.y <= -1){
 					Player2.alive = false;
-				}
-				if(Player3.x <= -1 || Player3.x >= 40 || Player3.y >= 40 || Player3.y <= -1){
-					Player3.alive = false;
-				}
-				if(Player4.x <= -1 || Player4.x >= 40 || Player4.y >= 40 || Player4.y <= -1){
-					Player4.alive = false;
 				}
 			}
 			function tick(){
@@ -268,32 +188,6 @@
 						break;
 					case 68:
 						Player1.direction = "right";
-						break;
-					//p3 ijkl
-					case 73:
-						Player3.direction = "up";
-						break;
-					case 74:
-						Player3.direction = "left";
-						break;
-					case 75:
-						Player3.direction = "down";
-						break;
-					case 76:
-						Player3.direction = "right";
-						break;
-					//p4 8456
-					case 104:
-						Player4.direction = "up";
-						break;
-					case 100:
-						Player4.direction = "left";
-						break;
-					case 101:
-						Player4.direction = "down";
-						break;
-					case 102:
-						Player4.direction = "right";
 						break;
 				}
 			}
