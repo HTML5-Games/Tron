@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tron</title>
+	</head>
+	<body>
+		<style type="text/css">
+			#canvas {
+				background-image: url("background.png");
+				background-repeat: repeat;
+				margin: none;
+				padding: none;
+				border-width: 1px;
+				border-color: "black";
+				border-style: solid;
+			}
+		</style>
+		<canvas id="canvas" width="640" height="640">Your browser stinks. Go get Firefox or Chrome.</canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var FPS = 10;
+			var Player1 = {
+				x: 3,
+				y: 20,
+				width: 16,
+				height: 16,
+				direction: "right",
+				color: "red",
+				alive: true
+			}
+			var Player2 = {
+				x: 36,
+				y: 20,
+				width: 16,
+				height: 16,
+				direction: "left",
+				color: "blue",
+				alive: true
+			}
+			function moveDude(player){
+				switch(player){
+					case 1:
+						switch(Player1.direction){
+							case "right":
+								Player1.x += 1;
+								break;
+							case "left":
+								Player1.x -= 1;
+								break;
+							case "up":
+								Player1.y -= 1;
+								break;
+							case "down":
+								Player1.y += 1;
+								break;
+						}
+						break;
+					case 2:
+						switch(Player2.direction){
+							case "right":
+								Player2.x += 1;
+								break;
+							case "left":
+								Player2.x -= 1;
+								break;
+							case "up":
+								Player2.y -= 1;
+								break;
+							case "down":
+								Player2.y += 1;
+								break;
+						}
+						break;
+				}
+			}
+			function draw(){
+				if(Player1.alive){
+					//Player1
+					ctx.fillStyle = Player1.color;
+					ctx.fillRect(Player1.x*16,Player1.y*16,Player1.width,Player1.height);
+				}
+				if(Player2.alive){
+					//Player2
+					ctx.fillStyle = Player2.color;
+					ctx.fillRect(Player2.x*16,Player2.y*16,Player2.width,Player2.height);
+				}
+			}
+			function update(){
+				moveDude(1);
+				moveDude(2);
+				if(Player1.x === Player2.x && Player1.y === Player2.y){
+					Player1.alive = false;
+					Player2.alive = false;
+				}
+				//collision detection
+				if(Player1.x <= -1 || Player1.x >= 40 || Player1.y >= 40 || Player1.y <= -1){
+					Player1.alive = false;
+				}
+				if(Player2.x <= -1 || Player2.x >= 40 || Player2.y >= 40 || Player2.y <= -1){
+					Player2.alive = false;
+				}
+			}
+			function tick(){
+				update();
+				draw();
+			}
+			setInterval(tick,1000/FPS);
+			document.onkeydown = function read(e){
+				e = e || window.event;
+				code = e.keyCode || e.which;
+				switch(code){
+					case 38:
+						Player2.direction = "up";
+						break;
+					case 37:
+						Player2.direction = "left";
+						break;
+					case 40:
+						Player2.direction = "down";
+						break;
+					case 39:
+						Player2.direction = "right";
+						break;
+					case 87:
+						Player1.direction = "up";
+						break;
+					case 65:
+						Player1.direction = "left";
+						break;
+					case 83:
+						Player1.direction = "down";
+						break;
+					case 68:
+						Player1.direction = "right";
+						break;
+				}
+			}
+		</script>
+	</body>
+</html>
