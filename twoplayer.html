@@ -19,7 +19,7 @@
 		<script type="text/javascript">
 			var canvas = document.getElementById("canvas");
 			var ctx = canvas.getContext("2d");
-			var FPS = 10;
+			var FPS = 12;
 			var blocks = [
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -63,6 +63,7 @@
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 			];
+			var alerted = false;
 			var Player1 = {
 				x: 2,
 				y: 20,
@@ -143,14 +144,25 @@
 				if(blocks[Player2.y][Player2.x] === 1){
 					Player2.alive = false;
 				}
+				if(Player1.y === Player2.y && Player1.x === Player2.x){
+					Player1.alive = false;
+					Player2.alive = false;
+					var collision = new Image();
+					collision.src = "collision.png";
+					ctx.drawImage(collision,Player1.x*16,Player1.y*16);
+					if(!alerted){
+						alert("Collision!");
+						alerted = true;
+					}
+				}
 				//update collision positions
 				blocks[Player1.y][Player1.x] = 1;
 				blocks[Player2.y][Player2.x] = 1;
 				//collision detection
-				if(Player1.x <= -1 || Player1.x >= 40 || Player1.y >= 40 || Player1.y <= -1){
+				if(Player1.x <= -1 || Player1.x >= 40 || Player1.y >= 40 || Player1.y <= 0){
 					Player1.alive = false;
 				}
-				if(Player2.x <= -1 || Player2.x >= 40 || Player2.y >= 40 || Player2.y <= -1){
+				if(Player2.x <= -1 || Player2.x >= 40 || Player2.y >= 40 || Player2.y <= 0){
 					Player2.alive = false;
 				}
 			}
